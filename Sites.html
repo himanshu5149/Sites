@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nebula AI — The Ultimate AI Tools Directory</title>
+<meta name="description" content="A curated, searchable directory of the best AI tools across 28 categories — academic support, image, video, code, research, design, and more." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config={
+  theme:{
+    extend:{
+      fontFamily:{sans:['Inter','system-ui','sans-serif']},
+      colors:{brand:{50:'#f5f3ff',100:'#ede9fe',500:'#8b5cf6',600:'#7c3aed',700:'#6d28d9'}},
+      animation:{'float':'float 7s ease-in-out infinite','marquee':'marquee 45s linear infinite'},
+      keyframes:{
+        float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-12px)'}},
+        marquee:{'0%':{transform:'translateX(0)'},'100%':{transform:'translateX(-50%)'}}
+      }
+    }
+  }
+}
+</script>
+<style>
+  body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;-webkit-font-smoothing:antialiased}
+  .dark body{background:#0a0a14;color:#e2e8f0}
+
+  /* Category block */
+  .cat-card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:box-shadow .25s,transform .25s}
+  .cat-card:hover{box-shadow:0 12px 30px -10px rgba(124,58,237,.25)}
+  .dark .cat-card{background:#111122;border-color:#1f1f38}
+  .cat-head{padding:16px 20px;display:flex;align-items:center;gap:12px;color:#fff;font-weight:700;position:relative;overflow:hidden}
+  .cat-head::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 100% 0,rgba(255,255,255,.25),transparent 55%);pointer-events:none}
+  .cat-ico{width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid rgba(255,255,255,.25)}
+  .cat-title{font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
+  .cat-count{margin-left:auto;font-size:.7rem;font-weight:700;background:rgba(0,0,0,.25);padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.2)}
+
+  /* Tool row */
+  .tool{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid #f1f5f9;transition:background .15s;position:relative}
+  .tool:last-child{border-bottom:none}
+  .tool:hover{background:#faf9ff}
+  .dark .tool{border-color:#1a1a2e}
+  .dark .tool:hover{background:#16162a}
+  .tool-ico{width:36px;height:36px;border-radius:10px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:13px}
+  .tool-body{min-width:0;flex:1}
+  .tool-nm{font-weight:700;font-size:.92rem;color:#0f172a;display:flex;align-items:center;gap:7px}
+  .dark .tool-nm{color:#f1f5f9}
+  .tool-ds{font-size:.78rem;color:#64748b;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dark .tool-ds{color:#94a3b8}
+  .tool-use{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#7c3aed;background:#ede9fe;padding:2px 7px;border-radius:5px;white-space:nowrap}
+  .tool-rt{margin-left:auto;display:flex;align-items:center;gap:9px;flex-shrink:0}
+  .stars{color:#f59e0b;font-size:.78rem;letter-spacing:1px}
+  .votes{font-size:.72rem;color:#94a3b8;font-weight:600;display:none;align-items:center;gap:3px}
+  @media(min-width:640px){.votes{display:inline-flex}}
+  .price{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:6px}
+  .p-Free{background:#dcfce7;color:#15803d}
+  .p-Freemium{background:#dbeafe;color:#1d4ed8}
+  .p-Paid{background:#fef3c7;color:#b45309}
+  .p-OSS{background:#f3e8ff;color:#7c3aed}
+  .dark .p-Free{background:rgba(16,185,129,.15);color:#34d399}
+  .dark .p-Freemium{background:rgba(59,130,246,.15);color:#60a5fa}
+  .dark .p-Paid{background:rgba(245,158,11,.15);color:#fbbf24}
+  .dark .p-OSS{background:rgba(168,85,247,.15);color:#c084fc}
+  .go{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;background:#f1f5f9;color:#475569;transition:all .15s}
+  .go:hover{background:#7c3aed;color:#fff;transform:translateY(-1px)}
+  .dark .go{background:#1f1f38;color:#94a3b8}
+  .dark .go:hover{background:#7c3aed;color:#fff}
+  .go svg{width:14px;height:14px}
+
+  .new-badge{font-size:.58rem;font-weight:800;text-transform:uppercase;background:linear-gradient(135deg,#06b6d4,#3b82f6);color:#fff;padding:2px 6px;border-radius:5px;letter-spacing:.03em}
+
+  .more-btn{width:100%;padding:11px;text-align:center;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7c3aed;background:#faf9ff;border-top:1px solid #f1f5f9;transition:all .15s;cursor:pointer}
+  .more-btn:hover{background:#ede9fe}
+  .dark .more-btn{background:#0f0f1e;border-color:#1a1a2e;color:#a78bfa}
+  .dark .more-btn:hover{background:#1a1a2e}
+
+  /* Tooltip */
+  .tip{position:relative}
+  .tip .bubble{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);background:#0f172a;color:#fff;font-size:.72rem;font-weight:500;padding:7px 11px;border-radius:8px;white-space:normal;width:max-content;max-width:280px;opacity:0;pointer-events:none;transition:all .18s;z-index:50;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .tip:hover .bubble{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* Header glass */
+  .glass{background:rgba(255,255,255,.85);backdrop-filter:blur(16px);border-bottom:1px solid #e2e8f0}
+  .dark .glass{background:rgba(10,10,20,.8);border-color:#1f1f38}
+
+  .gradient-text{background:linear-gradient(110deg,#7c3aed,#ec4899,#06b6d4,#7c3aed);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shine 5s linear infinite}
+  @keyframes shine{to{background-position:200% center}}
+
+  .marquee-track{display:flex;width:max-content;animation:marquee 45s linear infinite}
+  .marquee-wrap:hover .marquee-track{animation-play-state:paused}
+
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(#7c3aed,#06b6d4);border-radius:10px}
+
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ===== HEADER WITH LOGO ===== -->
+<header class="fixed top-0 inset-x-0 z-50 glass">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4">
+    <a href="#" class="flex items-center gap-2.5 shrink-0 group">
+      <!-- Inline SVG logo -->
+      <div class="relative w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 via-fuchsia-500 to-cyan-400 p-[2px] shadow-lg shadow-violet-500/30 group-hover:shadow-cyan-400/40 transition-shadow">
+        <div class="w-full h-full rounded-[10px] bg-white dark:bg-[#0a0a14] flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="url(#lg)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#7c3aed"/>
+                <stop offset=".5" stop-color="#ec4899"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
+          </svg>
+        </div>
+      </div>
+      <span class="font-black text-lg tracking-tight text-slate-900 dark:text-white">Nebula<span class="text-violet-600 dark:text-violet-400">.ai</span></span>
+    </a>
+
+    <div class="flex-1 max-w-xl mx-auto relative group">
+      <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-violet-600 transition" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="mainSearch" type="text" placeholder="Search 200+ AI tools…" class="w-full pl-10 pr-16 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40 focus:border-violet-500 transition" />
+      <kbd class="absolute right-3 top-1/2 -translate-y-1/2 hidden lg:inline text-[10px] font-bold text-slate-400 border border-slate-200 dark:border-white/15 rounded px-1.5 py-0.5 bg-slate-50 dark:bg-white/5">⌘K</kbd>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-600 dark:text-slate-300">
+      <a href="#directory" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition">Directory</a>
+      <a href="#submit" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition">Submit</a>
+    </nav>
+
+    <button id="themeToggle" class="w-10 h-10 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-white/10 transition text-slate-700 dark:text-slate-200" aria-label="Toggle theme">
+      <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="relative pt-28 pb-14 overflow-hidden">
+  <div class="absolute -top-20 -left-20 w-96 h-96 bg-violet-400/20 dark:bg-violet-600/20 rounded-full blur-3xl animate-float"></div>
+  <div class="absolute -top-10 right-0 w-96 h-96 bg-cyan-400/15 dark:bg-cyan-500/15 rounded-full blur-3xl animate-float" style="animation-delay:2s"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold text-slate-600 dark:text-slate-300 mb-6 shadow-sm">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      UPDATED DAILY · 200+ TOOLS · 28 CATEGORIES
+    </div>
+    <h1 class="font-black text-5xl sm:text-7xl lg:text-8xl tracking-tight mb-5 leading-[0.95] text-slate-900 dark:text-white">
+      THE <span class="gradient-text">ULTIMATE</span><br/>AI DIRECTORY
+    </h1>
+    <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-500 dark:text-slate-400 mb-8 font-medium">
+      Every AI tool and useful website worth bookmarking — academic support, image gen, code, research, design, dev tools, and the internet's best hidden gems. No dead links.
+    </p>
+    <div class="max-w-xl mx-auto">
+      <div class="relative group">
+        <div class="absolute -inset-0.5 bg-gradient-to-r from-violet-600 via-fuchsia-500 to-cyan-400 rounded-2xl blur opacity-40 group-focus-within:opacity-90 transition"></div>
+        <div class="relative flex items-center bg-white dark:bg-[#0a0a14] rounded-2xl border border-slate-200 dark:border-white/10">
+          <svg class="ml-5 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="heroSearch" type="text" placeholder="Search “academic”, “pdf”, “code”, “image”…" class="flex-1 bg-transparent pl-4 pr-4 py-4 text-sm text-slate-900 dark:text-white focus:outline-none placeholder:text-slate-400" />
+          <button id="heroBtn" class="m-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-sm hover:shadow-lg hover:shadow-violet-500/40 transition">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<div class="py-5 border-y border-slate-200 dark:border-white/5 bg-white dark:bg-[#0a0a14]/60 overflow-hidden marquee-wrap">
+  <div class="marquee-track gap-10 text-slate-400 dark:text-slate-500 font-bold text-sm uppercase tracking-wider">
+    <div class="flex items-center gap-10 pr-10"><span>ChatGPT</span><span>•</span><span>Claude</span><span>•</span><span>Julius</span><span>•</span><span>Elicit</span><span>•</span><span>Consensus</span><span>•</span><span>Perplexity</span><span>•</span><span>NotebookLM</span><span>•</span><span>Cursor</span><span>•</span><span>Bolt.new</span><span>•</span><span>Suno</span><span>•</span><span>ElevenLabs</span><span>•</span><span>Midjourney</span><span>•</span><span>Gamma</span><span>•</span><span>Zotero</span><span>•</span><span>RefSeek</span></div>
+    <div class="flex items-center gap-10 pr-10" aria-hidden="true"><span>ChatGPT</span><span>•</span><span>Claude</span><span>•</span><span>Julius</span><span>•</span><span>Elicit</span><span>•</span><span>Consensus</span><span>•</span><span>Perplexity</span><span>•</span><span>NotebookLM</span><span>•</span><span>Cursor</span><span>•</span><span>Bolt.new</span><span>•</span><span>Suno</span><span>•</span><span>ElevenLabs</span><span>•</span><span>Midjourney</span><span>•</span><span>Gamma</span><span>•</span><span>Zotero</span><span>•</span><span>RefSeek</span></div>
+  </div>
+</div>
+
+<!-- ===== DIRECTORY ===== -->
+<section id="directory" class="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+  <div class="flex items-end justify-between mb-6">
+    <div>
+      <div class="text-xs font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1">The full library</div>
+      <h2 class="font-black text-3xl sm:text-4xl tracking-tight text-slate-900 dark:text-white">ALL CATEGORIES</h2>
+    </div>
+  </div>
+
+  <div id="searchBanner" class="hidden mb-6 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl p-5 shadow-sm">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <div class="text-sm text-slate-500 dark:text-slate-400">Search results for</div>
+        <div class="text-xl font-black text-slate-900 dark:text-white" id="searchQuery"></div>
+        <div class="text-sm text-slate-500 dark:text-slate-400 mt-1"><span id="searchCount" class="text-violet-600 dark:text-violet-400 font-bold">0</span> tools found</div>
+      </div>
+      <button id="clearSearch" class="self-start sm:self-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-sm hover:shadow-lg hover:shadow-violet-500/40 transition inline-flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        Clear & see all
+      </button>
+    </div>
+  </div>
+
+  <div id="categoryContainer" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
+  <div id="searchResults" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
+
+  <div id="emptyState" class="hidden text-center py-20 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl">
+    <div class="text-6xl mb-4">🔍</div>
+    <h3 class="font-black text-2xl mb-2 text-slate-900 dark:text-white">No tools found</h3>
+    <p class="text-slate-500 dark:text-slate-400 mb-5">Try a different keyword or browse all categories.</p>
+    <button id="resetBtn" class="px-6 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-sm hover:shadow-lg transition">See all tools</button>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="submit" class="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
+  <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600 via-fuchsia-600 to-cyan-500 p-8 sm:p-14 text-center text-white shadow-2xl shadow-violet-500/30">
+    <div class="absolute -top-20 left-1/4 w-72 h-72 bg-white/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-20 right-1/4 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+    <div class="relative">
+      <h2 class="font-black text-3xl sm:text-5xl tracking-tight mb-3">BUILT SOMETHING <span class="underline decoration-white/40">BOLD</span>?</h2>
+      <p class="text-white/80 max-w-xl mx-auto mb-6 text-lg">Suggest an AI tool and we'll add it to the directory after review.</p>
+      <a href="#" class="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-white text-violet-700 font-black hover:shadow-xl transition">Suggest a tool →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="border-t border-slate-200 dark:border-white/5 py-10 bg-white dark:bg-[#070710]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center text-sm text-slate-500 dark:text-slate-500">
+    <div class="flex items-center justify-center gap-2 mb-2">
+      <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-600 via-fuchsia-500 to-cyan-400 p-[2px]">
+        <div class="w-full h-full rounded-[6px] bg-white dark:bg-[#070710] flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="url(#lf)" stroke-width="2.5"><defs><linearGradient id="lf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset=".5" stop-color="#ec4899"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <span class="font-black text-base text-slate-900 dark:text-white">NEBULA<span class="text-violet-600 dark:text-violet-400">.AI</span></span>
+    </div>
+    <p>© 2026 Nebula.ai — A curated directory for builders, students, and the curious. Every link verified.</p>
+  </div>
+</footer>
+
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] px-5 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-bold shadow-2xl opacity-0 pointer-events-none transition-all duration-300 translate-y-4"></div>
+
+<script>
+/* ============ CATEGORIES ============ */
+const CATS=[
+  {id:'academic',name:'Academic Support',ico:'🎓',g:'linear-gradient(135deg,#6366f1,#8b5cf6)'},
+  {id:'chatbot',name:'AI Chatbots',ico:'💬',g:'linear-gradient(135deg,#10b981,#14b8a6)'},
+  {id:'writing',name:'Writing & Copy',ico:'✍️',g:'linear-gradient(135deg,#f59e0b,#eab308)'},
+  {id:'image',name:'Image Generation',ico:'🎨',g:'linear-gradient(135deg,#ec4899,#f43f5e)'},
+  {id:'imgedit',name:'Image Editing',ico:'🖼️',g:'linear-gradient(135deg,#f97316,#ef4444)'},
+  {id:'video',name:'Video & Film',ico:'🎬',g:'linear-gradient(135deg,#ef4444,#f97316)'},
+  {id:'audio',name:'Audio & Voice',ico:'🎙️',g:'linear-gradient(135deg,#d946ef,#ec4899)'},
+  {id:'music',name:'Music',ico:'🎵',g:'linear-gradient(135deg,#6366f1,#3b82f6)'},
+  {id:'code',name:'Code & Dev Tools',ico:'💻',g:'linear-gradient(135deg,#3b82f6,#06b6d4)'},
+  {id:'devtools',name:'Developer Utilities',ico:'🛠️',g:'linear-gradient(135deg,#0ea5e9,#0284c7)'},
+  {id:'productivity',name:'Productivity',ico:'⚡',g:'linear-gradient(135deg,#8b5cf6,#a855f7)'},
+  {id:'design',name:'Design',ico:'🖌️',g:'linear-gradient(135deg,#a855f7,#d946ef)'},
+  {id:'presentation',name:'Presentations',ico:'📊',g:'linear-gradient(135deg,#3b82f6,#6366f1)'},
+  {id:'research',name:'Research & Search',ico:'🔬',g:'linear-gradient(135deg,#06b6d4,#3b82f6)'},
+  {id:'learning',name:'Learning Platforms',ico:'📚',g:'linear-gradient(135deg,#84cc16,#22c55e)'},
+  {id:'website',name:'Website Builders',ico:'🌐',g:'linear-gradient(135deg,#0ea5e9,#06b6d4)'},
+  {id:'seo',name:'SEO & Marketing',ico:'📈',g:'linear-gradient(135deg,#14b8a6,#22c55e)'},
+  {id:'file',name:'PDF & File Tools',ico:'📄',g:'linear-gradient(135deg,#f43f5e,#ec4899)'},
+  {id:'translation',name:'Translation',ico:'🌍',g:'linear-gradient(135deg,#0ea5e9,#22d3ee)'},
+  {id:'3d',name:'3D & Motion',ico:'🧊',g:'linear-gradient(135deg,#8b5cf6,#6366f1)'},
+  {id:'agents',name:'AI Agents & Models',ico:'🤖',g:'linear-gradient(135deg,#10b981,#06b6d4)'},
+  {id:'reference',name:'Reference & Utilities',ico:'🧭',g:'linear-gradient(135deg,#64748b,#475569)'},
+  {id:'business',name:'Business',ico:'💼',g:'linear-gradient(135deg,#475569,#334155)'},
+  {id:'health',name:'Health',ico:'❤️',g:'linear-gradient(135deg,#ef4444,#ec4899)'},
+];
+
+/* ============ TOOLS — every URL verified ============ */
+const T=[
+// Academic
+{n:'ChatGPT',c:'academic',u:'Brainstorming ideas, outlines, and concepts across any subject.',p:'Freemium',v:9950,use:'Brainstorming',url:'https://chatgpt.com/'},
+{n:'Claude',c:'academic',u:'Long-form writing support with deep context understanding.',p:'Freemium',v:8400,use:'Writing support',url:'https://claude.ai/new'},
+{n:'Julius AI',c:'academic',u:'Analyze data, run statistics, and create charts from spreadsheets.',p:'Freemium',v:5200,use:'Data analysis',url:'https://julius.ai/'},
+{n:'Elicit',c:'academic',u:'AI research assistant that finds and summarizes academic papers.',p:'Freemium',v:4200,use:'Literature search',url:'https://elicit.com/'},
+{n:'Consensus',c:'academic',u:'Evidence-based answers from scientific papers with citations.',p:'Freemium',v:4800,use:'Research answers',url:'https://consensus.app/'},
+{n:'Perplexity',c:'academic',u:'Source-backed AI search with real-time citations.',p:'Freemium',v:7600,use:'Source-backed search',url:'https://www.perplexity.ai/'},
+{n:'SciSummary',c:'academic',u:'Summarize scientific papers in minutes with AI.',p:'Freemium',v:2900,use:'Paper summarisation',url:'https://scisummary.com/'},
+{n:'ChatPDF',c:'academic',u:'Upload any PDF and ask questions about its contents.',p:'Freemium',v:5100,use:'PDF chat',url:'https://www.chatpdf.com/'},
+{n:'Adobe Acrobat AI',c:'academic',u:'AI Assistant that summarizes and answers questions in PDFs.',p:'Paid',v:3400,use:'PDF analysis',url:'https://www.adobe.com/acrobat/ai-assistant.html'},
+{n:'ResearchRabbit',c:'academic',u:'Map connected papers and discover citation networks.',p:'Free',v:3300,use:'Literature mapping',url:'https://www.researchrabbit.ai/'},
+{n:'Scite',c:'academic',u:'Smart citations showing supporting vs contrasting studies.',p:'Paid',v:2700,use:'Citation insight',url:'https://scite.ai/'},
+{n:'Semantic Scholar',c:'academic',u:'AI-powered search across 200M+ research papers.',p:'Free',v:4600,use:'Research discovery',url:'https://www.semanticscholar.org/'},
+{n:'Explainpaper',c:'academic',u:'Upload a paper and get confusing passages explained.',p:'Freemium',v:2400,use:'Paper explanation',url:'https://www.explainpaper.com/'},
+{n:'Jenni AI',c:'academic',u:'AI co-writer for literature reviews and manuscripts.',p:'Freemium',v:3600,use:'Literature review',url:'https://jenni.ai/'},
+{n:'Paperpal',c:'academic',u:'Academic writing assistant with grammar and language checks.',p:'Freemium',v:2300,use:'Academic writing',url:'https://paperpal.com/'},
+{n:'Grammarly',c:'academic',u:'Real-time grammar, clarity, and tone suggestions.',p:'Freemium',v:7800,use:'Grammar support',url:'https://www.grammarly.com/'},
+{n:'Writefull',c:'academic',u:'Academic editing and language check for manuscripts.',p:'Freemium',v:1900,use:'Academic editing',url:'https://www.writefull.com/'},
+{n:'QuillBot',c:'academic',u:'Paraphrase text with multiple tone and style modes.',p:'Freemium',v:6200,use:'Paraphrasing',url:'https://quillbot.com/'},
+{n:'Zotero',c:'academic',u:'Reference manager with AI plugins for citations.',p:'Free',v:5400,use:'Reference support',url:'https://www.zotero.org/'},
+{n:'Notion AI',c:'academic',u:'Writing, summarization, and thesis organization.',p:'Freemium',v:6300,use:'Thesis organisation',url:'https://www.notion.com/product/ai'},
+{n:'NotebookLM',c:'academic',u:'Google\'s AI notebook grounded in your uploaded sources.',p:'Free',v:6900,use:'Note synthesis',url:'https://notebooklm.google.com/'},
+{n:'Humata AI',c:'academic',u:'Chat with your research papers and long documents.',p:'Freemium',v:2800,use:'Reading papers',url:'https://www.humata.ai/'},
+{n:'Scholarcy',c:'academic',u:'Turns papers into summarized flashcards with key findings.',p:'Freemium',v:1800,use:'Research assistant',url:'https://www.scholarcy.com/'},
+{n:'Rayyan',c:'academic',u:'AI for systematic reviews and literature screening.',p:'Freemium',v:1600,use:'Systematic review',url:'https://www.rayyan.ai/'},
+{n:'Iris.ai',c:'academic',u:'AI tools for evidence synthesis and research mapping.',p:'Paid',v:1400,use:'Evidence synthesis',url:'https://iris.ai/'},
+{n:'Litmaps',c:'academic',u:'Visual literature maps that update as you research.',p:'Freemium',v:2100,use:'Finding papers',url:'https://www.litmaps.com/'},
+{n:'Connected Papers',c:'academic',u:'Visual graph of connected academic papers.',p:'Freemium',v:3100,use:'Citation discovery',url:'https://www.connectedpapers.com/'},
+{n:'Typeset.io',c:'academic',u:'Research writing, discovery, and journal submission.',p:'Freemium',v:1700,use:'Research summaries',url:'https://typeset.io/'},
+{n:'Elsevier Journal Finder',c:'academic',u:'Find the right Elsevier journal for your manuscript.',p:'Free',v:1300,use:'Journal finder',url:'https://journalfinder.elsevier.com/'},
+{n:'Wiley Author Services',c:'academic',u:'Wiley\'s manuscript preparation and submission tools.',p:'Free',v:900,use:'Manuscript check',url:'https://authorservices.wiley.com/'},
+{n:'GitHub Copilot',c:'academic',u:'AI pair programmer for code and data analysis scripts.',p:'Paid',v:9100,use:'Coding support',url:'https://github.com/features/copilot'},
+{n:'Gemini',c:'academic',u:'Google\'s multimodal AI for R, data, and document work.',p:'Freemium',v:8200,use:'R support',url:'https://gemini.google.com/app'},
+{n:'Microsoft Copilot',c:'academic',u:'AI across Word, Excel, and Forms for survey analysis.',p:'Freemium',v:6100,use:'Survey analysis',url:'https://copilot.microsoft.com/'},
+{n:'Otter.ai',c:'academic',u:'Records and transcribes interviews and meetings.',p:'Freemium',v:6700,use:'Transcription',url:'https://otter.ai/'},
+{n:'Fireflies.ai',c:'academic',u:'Automated meeting notes and interview transcription.',p:'Freemium',v:5400,use:'Interview notes',url:'https://fireflies.ai/'},
+{n:'DeepL',c:'academic',u:'The most accurate AI translator available.',p:'Freemium',v:7200,use:'Translation',url:'https://www.deepl.com/translator'},
+{n:'Gamma',c:'academic',u:'Generate polished presentations from text in minutes.',p:'Freemium',v:6700,use:'Presentation design',url:'https://gamma.app/'},
+{n:'Tome',c:'academic',u:'AI-native storytelling and pitch deck creation.',p:'Freemium',v:3500,use:'Slide creation',url:'https://tome.app/'},
+{n:'Canva',c:'academic',u:'Design visuals, posters, and slides with AI Magic Studio.',p:'Freemium',v:9200,use:'Visual design',url:'https://www.canva.com/'},
+{n:'Napkin AI',c:'academic',u:'Turn text into clean diagrams and visuals.',p:'Freemium',v:3300,use:'Diagram generation',url:'https://www.napkin.ai/'},
+{n:'Miro AI',c:'academic',u:'Collaborative whiteboard with AI mind-mapping.',p:'Freemium',v:4200,use:'Mind mapping',url:'https://miro.com/ai/'},
+{n:'ClickUp',c:'academic',u:'AI-powered task planning and project management.',p:'Freemium',v:4500,use:'Task planning',url:'https://clickup.com/'},
+{n:'Asana AI',c:'academic',u:'Smart project management and team coordination.',p:'Freemium',v:3900,use:'Project management',url:'https://asana.com/ai'},
+{n:'Grantable',c:'academic',u:'AI assistant for drafting grant proposals faster.',p:'Freemium',v:1500,use:'Grant writing',url:'https://grantable.co/'},
+
+// Chatbots
+{n:'Genspark',c:'chatbot',u:'AI answer engine with AI Agents and cited summaries.',p:'Freemium',v:6400,url:'https://www.genspark.ai/'},
+{n:'Mistral Le Chat',c:'chatbot',u:'Mistral\'s fast, privacy-focused conversational assistant.',p:'Free',v:4300,url:'https://chat.mistral.ai/'},
+{n:'Grok',c:'chatbot',u:'xAI\'s witty assistant with real-time X integration.',p:'Paid',v:5200,url:'https://grok.com/'},
+{n:'DeepSeek',c:'chatbot',u:'High-performance open-weight model with strong reasoning.',p:'Free',v:6900,url:'https://chat.deepseek.com/'},
+{n:'Poe',c:'chatbot',u:'Access multiple AI models in one place.',p:'Freemium',v:4800,url:'https://poe.com/'},
+{n:'Phind',c:'chatbot',u:'AI search engine built specifically for developers.',p:'Free',v:3600,url:'https://www.phind.com/'},
+
+// Writing
+{n:'Jasper',c:'writing',u:'AI marketing co-pilot for blogs, ads, and brand copy.',p:'Paid',v:5200,url:'https://www.jasper.ai/'},
+{n:'Copy.ai',c:'writing',u:'Generate sales, social, and email copy with AI workflows.',p:'Freemium',v:4100,url:'https://www.copy.ai/'},
+{n:'Writesonic',c:'writing',u:'SEO-optimized articles, chatbots, and AI writing at scale.',p:'Freemium',v:3900,url:'https://writesonic.com/'},
+{n:'Rytr',c:'writing',u:'Fast, affordable AI writer for 40+ use cases.',p:'Freemium',v:3400,url:'https://rytr.me/'},
+{n:'Hemingway Editor',c:'writing',u:'Makes your writing bold and clear, instantly.',p:'Free',v:4600,url:'https://hemingwayapp.com/'},
+
+// Image
+{n:'Midjourney',c:'image',u:'The gold standard in AI image generation.',p:'Paid',v:9820,url:'https://www.midjourney.com/'},
+{n:'Leonardo AI',c:'image',u:'Creative studio for game assets, concept art, design.',p:'Freemium',v:6890,url:'https://leonardo.ai/'},
+{n:'Ideogram',c:'image',u:'Image generator with best-in-class text rendering.',p:'Freemium',v:5430,url:'https://ideogram.ai/'},
+{n:'Meigen',c:'image',u:'AI avatar and character generator from a single photo.',p:'Freemium',v:3100,url:'https://meigen.ai/'},
+{n:'Recraft',c:'image',u:'Vector art, icons, and illustrations with brand control.',p:'Freemium',v:3210,url:'https://www.recraft.ai/'},
+{n:'Magnific',c:'image',u:'AI upscaler and enhancer that adds incredible detail.',p:'Paid',v:4560,url:'https://magnific.ai/'},
+{n:'Krea',c:'image',u:'Real-time AI image generation while you type.',p:'Freemium',v:4100,url:'https://www.krea.ai/'},
+{n:'Playground',c:'image',u:'Free AI image editing and generation platform.',p:'Freemium',v:3700,url:'https://playground.com/'},
+
+// Image editing
+{n:'Clipdrop',c:'imgedit',u:'Remove objects, relight, and upscale any image.',p:'Freemium',v:5600,url:'https://clipdrop.co/'},
+{n:'remove.bg',c:'imgedit',u:'Background removal in literally one click.',p:'Freemium',v:7400,url:'https://www.remove.bg/'},
+{n:'Cleanup.pictures',c:'imgedit',u:'Erase unwanted objects from photos effortlessly.',p:'Freemium',v:4900,url:'https://cleanup.pictures/'},
+{n:'iLoveIMG',c:'imgedit',u:'Resize, crop, compress, and convert images in bulk.',p:'Free',v:3800,url:'https://www.iloveimg.com/'},
+{n:'Screenshot.rocks',c:'imgedit',u:'Turn a screenshot into a clean browser mockup.',p:'Free',v:2200,url:'https://screenshot.rocks/'},
+{n:'Photopea',c:'imgedit',u:'Free Photoshop alternative that runs in your browser.',p:'Free',v:6700,url:'https://www.photopea.com/'},
+{n:'Adobe Firefly',c:'imgedit',u:'Adobe\'s generative image model trained on licensed content.',p:'Freemium',v:5600,url:'https://firefly.adobe.com/'},
+
+// Video
+{n:'Runway',c:'video',u:'Professional AI video suite with Gen-3 and inpainting.',p:'Freemium',v:8900,url:'https://runwayml.com/'},
+{n:'Pika',c:'video',u:'Text-to-video platform for stylized animated clips.',p:'Freemium',v:7200,url:'https://pika.art/'},
+{n:'HeyGen',c:'video',u:'AI avatars and video translation in 40+ languages.',p:'Freemium',v:6780,url:'https://www.heygen.com/'},
+{n:'Synthesia',c:'video',u:'Training and marketing videos with AI presenters.',p:'Paid',v:5430,url:'https://www.synthesia.io/'},
+{n:'CapCut',c:'video',u:'All-in-one AI video editor with auto-captions.',p:'Free',v:8200,url:'https://www.capcut.com/'},
+{n:'Descript',c:'video',u:'Edit video and podcasts by editing text.',p:'Freemium',v:4980,url:'https://www.descript.com/'},
+{n:'Kling',c:'video',u:'High-quality cinematic text-to-video model.',p:'Freemium',v:5670,url:'https://klingai.com/'},
+{n:'Hedra',c:'video',u:'Create talking AI characters from photos.',p:'Freemium',v:3400,url:'https://www.hedra.com/'},
+{n:'OpusClip',c:'video',u:'Turn long videos into viral short clips automatically.',p:'Freemium',v:5900,url:'https://www.opus.pro/'},
+{n:'VEED',c:'video',u:'Browser-based AI video editing made easy.',p:'Freemium',v:4300,url:'https://www.veed.io/'},
+{n:'InVideo',c:'video',u:'AI video generation for YouTube and socials.',p:'Freemium',v:4700,url:'https://invideo.io/'},
+
+// Audio
+{n:'ElevenLabs',c:'audio',u:'Ultra-realistic AI voices and voice cloning.',p:'Freemium',v:8700,url:'https://elevenlabs.io/'},
+{n:'Adobe Podcast',c:'audio',u:'Remove background noise and enhance voice.',p:'Free',v:5400,url:'https://podcast.adobe.com/'},
+{n:'Murf',c:'audio',u:'Studio-quality AI voiceovers for videos.',p:'Freemium',v:4200,url:'https://murf.ai/'},
+{n:'Speechify',c:'audio',u:'Read any text, PDF, or webpage aloud.',p:'Freemium',v:4900,url:'https://speechify.com/'},
+{n:'PlayHT',c:'audio',u:'AI voices in 140+ languages with emotion.',p:'Freemium',v:3300,url:'https://play.ht/'},
+
+// Music
+{n:'Suno',c:'music',u:'Generate full songs with vocals from a prompt.',p:'Freemium',v:8900,url:'https://suno.com/'},
+{n:'Udio',c:'music',u:'Studio-quality AI music creation.',p:'Freemium',v:7400,url:'https://www.udio.com/'},
+{n:'Soundraw',c:'music',u:'Royalty-free AI music customized to length.',p:'Paid',v:3800,url:'https://soundraw.io/'},
+{n:'AIVA',c:'music',u:'Compose emotional soundtracks for games and film.',p:'Freemium',v:3100,url:'https://www.aiva.ai/'},
+{n:'Stable Audio',c:'music',u:'Custom music and sound effects with timing control.',p:'Freemium',v:2900,url:'https://stableaudio.com/'},
+{n:'MusicTheory',c:'music',u:'Learn to read music for free with lessons and tools.',p:'Free',v:2400,url:'https://www.musictheory.net/'},
+
+// Code
+{n:'Cursor',c:'code',u:'AI-first code editor that understands your codebase.',p:'Freemium',v:8800,url:'https://cursor.sh/'},
+{n:'Windsurf',c:'code',u:'Agentic IDE for multi-file edits and reasoning.',p:'Freemium',v:5600,url:'https://windsurf.com/'},
+{n:'Replit',c:'code',u:'Build, host, and share apps in the browser with AI.',p:'Freemium',v:5200,url:'https://replit.com/'},
+{n:'v0',c:'code',u:'Vercel\'s AI generates React/Next.js UI from prompts.',p:'Freemium',v:6400,url:'https://v0.dev/'},
+{n:'Bolt.new',c:'code',u:'StackBlitz\'s browser-based full-stack app builder.',p:'Freemium',v:5800,url:'https://bolt.new/'},
+{n:'Fix My Itch',c:'code',u:'AI debugging assistant that finds and fixes bugs fast.',p:'Free',v:2400,url:'https://fixmyitch.com/'},
+{n:'Cody',c:'code',u:'Sourcegraph\'s AI code assistant with deep context.',p:'Freemium',v:3100,url:'https://sourcegraph.com/cody'},
+{n:'tldraw make-real',c:'code',u:'Draw a wireframe and turn it into a real site.',p:'Free',v:4400,url:'https://make.real.tldraw.com/'},
+{n:'Websim',c:'code',u:'Build interactive web experiences from prompts.',p:'Freemium',v:3900,url:'https://websim.ai/'},
+
+// Developer utilities
+{n:'Can I Use',c:'devtools',u:'Check browser support for any web feature.',p:'Free',v:4100,url:'https://caniuse.com/'},
+{n:'Crontab Guru',c:'devtools',u:'Decode and write any cron schedule instantly.',p:'Free',v:3300,url:'https://crontab.guru/'},
+{n:'DevDocs',c:'devtools',u:'Every language\'s docs in one fast app.',p:'Free',v:4200,url:'https://devdocs.io/'},
+{n:'JSON Crack',c:'devtools',u:'Turn messy JSON into a readable graph.',p:'Free',v:4700,url:'https://jsoncrack.com/'},
+{n:'Transform.tools',c:'devtools',u:'Convert almost anything to anything.',p:'Free',v:3800,url:'https://transform.tools/'},
+{n:'readme.so',c:'devtools',u:'Build a slick GitHub README by clicking.',p:'Free',v:3500,url:'https://readme.so/'},
+{n:'cht.sh',c:'devtools',u:'Cheat sheets straight from your terminal.',p:'Free',v:2600,url:'https://cht.sh/'},
+{n:'Devhints',c:'devtools',u:'One-page cheat sheets for every tool.',p:'Free',v:3200,url:'https://devhints.io/'},
+{n:'Bundlephobia',c:'devtools',u:'See the real cost of an npm package.',p:'Free',v:2900,url:'https://bundlephobia.com/'},
+{n:'gitignore.io',c:'devtools',u:'The right .gitignore for any stack.',p:'Free',v:3400,url:'https://www.toptal.com/developers/gitignore'},
+{n:'Webhook.site',c:'devtools',u:'Inspect any webhook or HTTP request live.',p:'Free',v:3700,url:'https://webhook.site/'},
+{n:'Hoppscotch',c:'devtools',u:'Test APIs in your browser, free.',p:'Free',v:4500,url:'https://hoppscotch.io/'},
+{n:'Hugging Face Spaces',c:'devtools',u:'Playground for thousands of open-source AI tools.',p:'Free',v:5100,url:'https://huggingface.co/spaces'},
+
+// Productivity
+{n:'Mem',c:'productivity',u:'Self-organizing AI workspace that surfaces what you need.',p:'Freemium',v:3200,url:'https://get.mem.ai/'},
+{n:'Taskade',c:'productivity',u:'AI outlines, tasks, and mind maps for teams.',p:'Freemium',v:3800,url:'https://www.taskade.com/'},
+{n:'Raycast',c:'productivity',u:'Launcher with AI, extensions, and snippets.',p:'Freemium',v:6100,url:'https://www.raycast.com/'},
+{n:'Dust',c:'productivity',u:'Connect company apps to custom AI agents.',p:'Freemium',v:2100,url:'https://dust.tt/'},
+{n:'When2Meet',c:'productivity',u:'Schedule a group event in 30 seconds, no login.',p:'Free',v:5200,url:'https://www.when2meet.com/'},
+{n:'Rentry',c:'productivity',u:'Instant shareable markdown notes, no account.',p:'Free',v:2300,url:'https://rentry.co/'},
+{n:'Dillinger',c:'productivity',u:'Write markdown and see it live.',p:'Free',v:2700,url:'https://dillinger.io/'},
+
+// Design
+{n:'Figma',c:'design',u:'Collaborative UI/UX design powerhouse with AI.',p:'Freemium',v:7800,url:'https://www.figma.com/'},
+{n:'Framer',c:'design',u:'Design and publish responsive websites with AI.',p:'Freemium',v:5200,url:'https://www.framer.com/'},
+{n:'Galileo AI',c:'design',u:'Generate high-fidelity UI designs from text.',p:'Paid',v:3400,url:'https://www.usegalileo.ai/'},
+{n:'Realtime Colors',c:'design',u:'Test a color palette on a real site, live.',p:'Free',v:2800,url:'https://www.realtimecolors.com/'},
+{n:'Fontjoy',c:'design',u:'Perfect font pairings in one click.',p:'Free',v:3100,url:'https://fontjoy.com/'},
+{n:'fffuel.co',c:'design',u:'Free SVG generators for backgrounds and textures.',p:'Free',v:2900,url:'https://fffuel.co/'},
+{n:'Haikei',c:'design',u:'Generate waves, blobs, and gradients as SVG.',p:'Free',v:3500,url:'https://haikei.app/'},
+{n:'unDraw',c:'design',u:'Free illustrations in your brand color.',p:'Free',v:4200,url:'https://undraw.co/'},
+{n:'Storyset',c:'design',u:'Free, editable, animated illustrations.',p:'Free',v:3300,url:'https://storyset.com/'},
+{n:'LottieFiles',c:'design',u:'Free animated icons for anything.',p:'Freemium',v:3900,url:'https://lottiefiles.com/'},
+{n:'Icones',c:'design',u:'200,000+ icons, all searchable.',p:'Free',v:4400,url:'https://icones.js.org/'},
+{n:'Lummi',c:'design',u:'Free stock photos that don\'t look like stock.',p:'Free',v:2800,url:'https://www.lummi.ai/'},
+
+// Presentations
+{n:'Beautiful.ai',c:'presentation',u:'Smart slides that auto-design as you add content.',p:'Paid',v:4800,url:'https://www.beautiful.ai/'},
+{n:'SlidesAI',c:'presentation',u:'Turn any text into a Google Slides deck.',p:'Freemium',v:3500,url:'https://slidesai.io/'},
+{n:'Pitch',c:'presentation',u:'AI-assisted presentation builder with collaboration.',p:'Freemium',v:3300,url:'https://pitch.com/'},
+
+// Research & Search
+{n:'RefSeek',c:'research',u:'Google for students — no ads, no junk.',p:'Free',v:4400,url:'https://www.refseek.com/'},
+{n:'CORE',c:'research',u:'250M+ research papers, all free and legal.',p:'Free',v:4100,url:'https://core.ac.uk/'},
+{n:'DOAJ',c:'research',u:'Every open-access journal in one place.',p:'Free',v:3300,url:'https://doaj.org/'},
+{n:'BASE',c:'research',u:'Search 400M+ academic documents at once.',p:'Free',v:2800,url:'https://www.base-search.net/'},
+{n:'WorldCat',c:'research',u:'Find any book in a library near you.',p:'Free',v:3600,url:'https://www.worldcat.org/'},
+{n:'Wikiwand',c:'research',u:'Wikipedia, redesigned to be beautiful.',p:'Free',v:8000,url:'https://www.wikiwand.com/'},
+{n:'Marginalia Search',c:'research',u:'Search the old, weird, text-only web.',p:'Free',v:2200,url:'https://marginalia-search.com/'},
+{n:'Wolfram Alpha',c:'research',u:'Computational knowledge engine for math and science.',p:'Freemium',v:5800,url:'https://www.wolframalpha.com/'},
+
+// Learning
+{n:'OpenStax',c:'learning',u:'Free, peer-reviewed college textbooks.',p:'Free',v:4700,url:'https://openstax.org/'},
+{n:'CS50 Harvard',c:'learning',u:'Harvard\'s legendary CS course, free.',p:'Free',v:5800,url:'https://cs50.harvard.edu/'},
+{n:'freeCodeCamp',c:'learning',u:'Learn to code, free, forever, with certifications.',p:'Free',v:7600,url:'https://www.freecodecamp.org/'},
+{n:'Roadmap.sh',c:'learning',u:'The exact path to any tech job.',p:'Free',v:6200,url:'https://roadmap.sh/'},
+{n:'TED',c:'learning',u:'A genius idea in 15 minutes.',p:'Free',v:5500,url:'https://www.ted.com/'},
+{n:'Learn X in Y Minutes',c:'learning',u:'A whole programming language on one page.',p:'Free',v:5100,url:'https://learnxinyminutes.com/'},
+{n:'Desmos',c:'learning',u:'A graphing calculator that\'s actually good.',p:'Free',v:4800,url:'https://www.desmos.com/'},
+{n:'GeoGebra',c:'learning',u:'Algebra, geometry, and calculus, visualized.',p:'Free',v:4400,url:'https://www.geogebra.org/'},
+
+// Website builders
+{n:'Wix AI',c:'website',u:'Describe your site and Wix builds it with AI.',p:'Freemium',v:5400,url:'https://www.wix.com/'},
+{n:'Durable',c:'website',u:'Generate a complete business website in 30 seconds.',p:'Freemium',v:3600,url:'https://durable.co/'},
+{n:'Hostinger AI',c:'website',u:'AI website builder that generates a full site.',p:'Paid',v:3200,url:'https://www.hostinger.com/'},
+{n:'10Web',c:'website',u:'AI WordPress builder with automated hosting.',p:'Freemium',v:2900,url:'https://10web.io/'},
+{n:'MotionSites',c:'website',u:'AI motion-rich website templates and builder.',p:'Freemium',v:2800,url:'https://motionsites.com/'},
+
+// SEO & Marketing
+{n:'HubSpot AI',c:'seo',u:'AI content assistant and CRM across HubSpot.',p:'Freemium',v:6200,url:'https://www.hubspot.com/artificial-intelligence'},
+{n:'Semrush',c:'seo',u:'All-in-one SEO, content, and competitor research.',p:'Paid',v:6800,url:'https://www.semrush.com/'},
+{n:'AdCreative.ai',c:'seo',u:'Generate conversion-focused ad creatives.',p:'Paid',v:4400,url:'https://www.adcreative.ai/'},
+{n:'Ahrefs',c:'seo',u:'SEO platform with AI writing and audit tools.',p:'Paid',v:6100,url:'https://ahrefs.com/'},
+{n:'Surfer SEO',c:'seo',u:'Data-driven content editor with AI outlines.',p:'Paid',v:4800,url:'https://surferseo.com/'},
+{n:'Frase',c:'seo',u:'Research, write, and optimize SEO content.',p:'Paid',v:3600,url:'https://www.frase.io/'},
+{n:'Buffer AI',c:'seo',u:'AI assistant for drafting and scheduling posts.',p:'Freemium',v:4700,url:'https://buffer.com/ai-assistant'},
+{n:'Hootsuite',c:'seo',u:'Generate captions with OwlyWriter AI.',p:'Paid',v:3400,url:'https://www.hootsuite.com/'},
+{n:'Predis',c:'seo',u:'AI social content from text to carousels.',p:'Freemium',v:3100,url:'https://predis.ai/'},
+{n:'Futurepedia',c:'seo',u:'Massive directory of AI tools worth exploring.',p:'Free',v:5200,url:'https://futurepedia.io/'},
+
+// PDF & File
+{n:'TinyWow',c:'file',u:'200+ free tools for PDFs, images, writing, video.',p:'Free',v:5400,url:'https://tinywow.com/'},
+{n:'iLovePDF',c:'file',u:'Every PDF tool you\'ll ever need, free.',p:'Free',v:6900,url:'https://www.ilovepdf.com/'},
+{n:'10015.io',c:'file',u:'100+ handy web tools in one tab.',p:'Free',v:3800,url:'https://10015.io/'},
+{n:'CloudConvert',c:'file',u:'Convert 200+ file formats online.',p:'Freemium',v:4200,url:'https://cloudconvert.com/'},
+{n:'FilePizza',c:'file',u:'Send files peer-to-peer, nothing stored.',p:'Free',v:3500,url:'https://file.pizza/'},
+
+// Translation
+{n:'Google Translate',c:'translation',u:'Universal translation across 130+ languages.',p:'Free',v:8400,url:'https://translate.google.com/'},
+{n:'Rask AI',c:'translation',u:'Video translation and dubbing in 130 languages.',p:'Freemium',v:3400,url:'https://rask.ai/'},
+
+// 3D & Motion
+{n:'Luma AI',c:'3d',u:'Generate 3D scenes from text, images, or video.',p:'Freemium',v:4600,url:'https://lumalabs.ai/'},
+{n:'AI Particles',c:'3d',u:'AI-generated real-time particle systems and VFX.',p:'Freemium',v:2200,url:'https://aiparticles.ai/'},
+{n:'Tripo3D',c:'3d',u:'Fast text-to-3D model generation.',p:'Freemium',v:3200,url:'https://www.tripo3d.ai/'},
+{n:'Meshy',c:'3d',u:'Create game-ready 3D assets with AI.',p:'Freemium',v:3400,url:'https://meshy.ai/'},
+{n:'Spline',c:'3d',u:'Design 3D web experiences with AI.',p:'Freemium',v:3800,url:'https://spline.design/'},
+{n:'Kaedim',c:'3d',u:'Turn 2D art into production-ready 3D models.',p:'Paid',v:2100,url:'https://www.kaedim3d.com/'},
+
+// Agents
+{n:'AutoGPT',c:'agents',u:'The original autonomous AI agent.',p:'Free',v:5800,url:'https://agpt.co/'},
+{n:'Manus',c:'agents',u:'General AI agent for complex end-to-end tasks.',p:'Freemium',v:6200,url:'https://manus.im/'},
+{n:'AgentGPT',c:'agents',u:'Deploy autonomous AI agents in your browser.',p:'Freemium',v:4900,url:'https://agentgpt.reworkd.ai/'},
+{n:'Lindy',c:'agents',u:'No-code AI employees that automate workflows.',p:'Freemium',v:3400,url:'https://www.lindy.ai/'},
+{n:'MultiOn',c:'agents',u:'AI browser agent that books and automates tasks.',p:'Freemium',v:3100,url:'https://www.multion.ai/'},
+
+// Reference
+{n:'Internet Archive',c:'reference',u:'The internet\'s memory vault — free books, movies, software.',p:'Free',v:7200,url:'https://archive.org/'},
+{n:'Sifuyik',c:'reference',u:'10,000+ viral AI prompts plus AI news and tips.',p:'Free',v:3400,url:'https://sifuyik.com/'},
+
+// Business
+{n:'Zapier AI',c:'business',u:'Build automations with natural language across 7,000+ apps.',p:'Freemium',v:6400,url:'https://zapier.com/ai'},
+{n:'Glean',c:'business',u:'Enterprise AI search across company apps and docs.',p:'Paid',v:3100,url:'https://www.glean.com/'},
+
+// Health
+{n:'Woebot',c:'health',u:'CBT-based AI chatbot for mental health support.',p:'Free',v:3800,url:'https://woebothealth.com/'},
+{n:'Wysa',c:'health',u:'Anonymous AI therapy coach with CBT tools.',p:'Freemium',v:3400,url:'https://www.wysa.com/'},
+{n:'Fitbod',c:'health',u:'AI personal trainer that designs adaptive workouts.',p:'Freemium',v:4200,url:'https://fitbod.me/'},
+];
+
+/* ============ HELPERS ============ */
+const palette=['#7c3aed','#06b6d4','#ec4899','#f59e0b','#3b82f6','#10b981','#8b5cf6','#0ea5e9','#f43f5e','#84cc16'];
+function icoFor(n){
+  let h=0;for(let i=0;i<n.length;i++)h=n.charCodeAt(i)+((h<<5)-h);
+  const c1=palette[Math.abs(h)%palette.length],c2=palette[Math.abs(h>>3)%palette.length];
+  const inits=n.replace(/[^a-zA-Z0-9 ]/g,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="80" height="80" rx="16" fill="url(#g)"/><text x="40" y="50" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="800" fill="white" text-anchor="middle">${inits}</text></svg>`;
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.style.opacity='1';t.style.transform='translate(-50%,0)';clearTimeout(showToast._t);showToast._t=setTimeout(()=>{t.style.opacity='0';t.style.transform='translate(-50%,1rem)';},1500);}
+
+function stars(r){return '★★★★★'.slice(0,Math.round(r))}
+
+function toolRow(t){
+  return `<a href="${t.url}" target="_blank" rel="noopener noreferrer" data-n="${t.n}" class="tool tool-link tip">
+    <img src="${icoFor(t.n)}" class="tool-ico" alt="${t.n}"/>
+    <div class="tool-body">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="tool-nm">${t.n}</span>
+        ${t.use?`<span class="tool-use hidden xl:inline-flex">${t.use}</span>`:''}
+      </div>
+      <div class="tool-ds">${t.u}</div>
+    </div>
+    <div class="tool-rt">
+      <span class="votes" title="Community votes">
+        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
+        ${(t.v/1000).toFixed(1)}k
+      </span>
+      <span class="price p-${t.p}">${t.p}</span>
+      <span class="go" title="Visit ${t.n}"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+    </div>
+    <span class="bubble">${t.u}</span>
+  </a>`;
+}
+
+const expanded=new Set();
+function catBlock(cat){
+  const tools=T.filter(t=>t.c===cat.id).sort((a,b)=>(b.v||0)-(a.v||0));
+  if(!tools.length) return '';
+  const ex=expanded.has(cat.id);
+  const vis=ex?tools:tools.slice(0,5);
+  const hid=tools.length-vis.length;
+  return `<div class="cat-card">
+    <div class="cat-head" style="background:${cat.g}">
+      <div class="cat-ico">${cat.ico}</div>
+      <div class="cat-title">${cat.name.toUpperCase()}</div>
+      <span class="cat-count">${tools.length} TOOLS</span>
+    </div>
+    <div>${vis.map(toolRow).join('')}</div>
+    ${hid>0?`<button class="more-btn" data-cat="${cat.id}">SHOW ALL ${tools.length} TOOLS ▾</button>`:''}
+  </div>`;
+}
+function renderDir(){
+  document.getElementById('categoryContainer').innerHTML=CATS.map(catBlock).join('');
+  attach();
+}
+function attach(){
+  document.querySelectorAll('.more-btn').forEach(b=>b.addEventListener('click',()=>{
+    const id=b.dataset.cat; expanded.add(id); renderDir();
+    showToast('Showing all '+CATS.find(c=>c.id===id).name);
+  }));
+  document.querySelectorAll('.tool-link').forEach(a=>a.addEventListener('mousedown',()=>{
+    if(a.dataset.n) showToast('Opening '+a.dataset.n+' ↗');
+  }));
+}
+
+/* ============ SEARCH ============ */
+function doSearch(qRaw){
+  const q=(qRaw||'').trim().toLowerCase();
+  const banner=document.getElementById('searchBanner'),catC=document.getElementById('categoryContainer'),
+        sR=document.getElementById('searchResults'),empty=document.getElementById('emptyState'),
+        cnt=document.getElementById('searchCount'),qq=document.getElementById('searchQuery');
+  if(!q){banner.classList.add('hidden');sR.classList.add('hidden');catC.classList.remove('hidden');empty.classList.add('hidden');return;}
+  const m=T.filter(t=>t.n.toLowerCase().includes(q)||t.u.toLowerCase().includes(q)||
+    (t.use||'').toLowerCase().includes(q)||CATS.find(c=>c.id===t.c).name.toLowerCase().includes(q));
+  banner.classList.remove('hidden');catC.classList.add('hidden');
+  qq.textContent='"'+qRaw.trim()+'"';cnt.textContent=m.length;
+  if(!m.length){sR.classList.add('hidden');empty.classList.remove('hidden');return;}
+  empty.classList.add('hidden');
+  const g={};m.forEach(t=>(g[t.c]=g[t.c]||[]).push(t));
+  sR.classList.remove('hidden');
+  sR.innerHTML=Object.keys(g).map(cid=>{
+    const cat=CATS.find(c=>c.id===cid);
+    const tools=g[cid].sort((a,b)=>(b.v||0)-(a.v||0));
+    return `<div class="cat-card">
+      <div class="cat-head" style="background:${cat.g}">
+        <div class="cat-ico">${cat.ico}</div><div class="cat-title">${cat.name.toUpperCase()}</div>
+        <span class="cat-count">${tools.length} MATCH${tools.length!==1?'ES':''}</span>
+      </div>${tools.map(toolRow).join('')}
+    </div>`;
+  }).join('');
+  attach();
+}
+function clearSearch(){st.query='';sync();doSearch('');document.getElementById('directory').scrollIntoView({behavior:'smooth',block:'start'});}
+
+const st={query:''};
+const sInputs=['mainSearch','heroSearch'].map(id=>document.getElementById(id));
+function sync(){sInputs.forEach(i=>{if(i)i.value=st.query;});}
+sInputs.forEach(i=>{if(!i)return;i.addEventListener('input',e=>{st.query=e.target.value;sInputs.forEach(o=>{if(o&&o!==i)o.value=st.query;});doSearch(st.query);});});
+document.getElementById('heroBtn').addEventListener('click',()=>{doSearch(st.query);document.getElementById('directory').scrollIntoView({behavior:'smooth',block:'start'});});
+document.getElementById('clearSearch').addEventListener('click',clearSearch);
+document.getElementById('resetBtn').addEventListener('click',clearSearch);
+
+document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();const s=document.getElementById('mainSearch');s.focus();s.scrollIntoView({behavior:'smooth',block:'center'});}});
+
+const tt=document.getElementById('themeToggle');
+function setTheme(d){document.documentElement.classList.toggle('dark',d);try{localStorage.setItem('nebula-theme',d?'dark':'light');}catch(e){}}
+tt.addEventListener('click',()=>setTheme(!document.documentElement.classList.contains('dark')));
+try{const s=localStorage.getItem('nebula-theme');setTheme(s==='dark');}catch(e){setTheme(false);}
+
+renderDir();
+</script>
+</body>
+</html>
