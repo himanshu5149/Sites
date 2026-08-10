@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: sites-beryl-eight.vercel.app/sitemap.xml
+Sitemap: sites-beryl-eight.vercel.app
